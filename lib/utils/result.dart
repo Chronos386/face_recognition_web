@@ -14,6 +14,20 @@ abstract class Result<T> {
     }
     throw Exception('Unknown result type: $result');
   }
+
+  void whenSuccess(void Function(T data) success) {
+    when(
+      success: success,
+      error: (_) {},
+    );
+  }
+
+  Result<R> mapTo<R>(R Function(T data) mapper) {
+    return when(
+      success: (data) => Success(mapper(data)),
+      error: (code) => Error(code),
+    );
+  }
 }
 
 class Success<T> extends Result<T> {

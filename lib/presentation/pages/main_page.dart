@@ -1,7 +1,6 @@
-// presentation/bloc/main_bloc/main_bloc.dart
+// presentation/pages/main_page.dart
 import 'error_page.dart';
 import 'loading_page.dart';
-import 'system/system_page.dart';
 import 'package:flutter/material.dart';
 import 'analytics/analytics_page.dart';
 import 'dashboard/dashboard_page.dart';
@@ -9,6 +8,7 @@ import '../bloc/main_bloc/main_bloc.dart';
 import '/res/generated/locale_keys.g.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'data_management/data_management_page.dart';
+import '../bloc/dashboard_bloc/dashboard_bloc.dart';
 import '../bloc/analytics_bloc/analytics_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -22,13 +22,15 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [
-    const DashboardScreen(),
+    BlocProvider(
+        create: (context) => DashboardBloc(),
+        child: DashboardPage()
+    ),
     const DataManagementPage(),
     BlocProvider(
         create: (context) => AnalyticsBloc(),
         child: AnalyticsPage()
     ),
-    const SystemScreen(),
   ];
 
   @override
@@ -88,10 +90,6 @@ class _MainScreenState extends State<MainScreen> {
           icon: Icon(Icons.analytics, color: Colors.grey[600]),
           label: Text(LocaleKeys.analytics.tr(), style: TextStyle(color: Colors.grey[600])),
         ),
-        NavigationRailDestination(
-          icon: Icon(Icons.settings, color: Colors.grey[600]),
-          label: Text(LocaleKeys.system.tr(), style: TextStyle(color: Colors.grey[600])),
-        ),
       ],
     );
   }
@@ -113,10 +111,6 @@ class _MainScreenState extends State<MainScreen> {
         BottomNavigationBarItem(
           icon: Icon(Icons.analytics, color: Colors.grey[600]),
           label: LocaleKeys.analytics.tr(),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings, color: Colors.grey[600]),
-          label: LocaleKeys.system.tr(),
         ),
       ],
     );

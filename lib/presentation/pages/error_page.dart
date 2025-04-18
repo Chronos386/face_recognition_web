@@ -1,3 +1,4 @@
+// presentation/pages/error_page.dart
 import 'package:flutter/material.dart';
 import '/res/generated/locale_keys.g.dart';
 import '../widgets/try_again_button_widget.dart';

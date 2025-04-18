@@ -1,6 +1,9 @@
-class InstituteDomain {
+import 'has_id.dart';
+
+class InstituteDomain implements HasId {
+  @override
   final int id;
-  final String name;
+  String name;
 
   InstituteDomain({
     required this.id,

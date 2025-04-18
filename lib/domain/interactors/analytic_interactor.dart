@@ -32,7 +32,7 @@ class AnalyticInteractor {
     }
     late Result<AnalyticDomain> result;
     Result<List<GroupDomain>> resultTask = await appRepo
-        .getGroupsByInstitute(hash, institute.id);
+        .getGroups(hash, institute.id);
     resultTask.when(
       success: (data) {
         analyticState.addGroupsEx2(institute, data);
@@ -52,7 +52,7 @@ class AnalyticInteractor {
     }
     late Result<AnalyticDomain> result;
     Result<List<GroupDomain>> resultTask = await appRepo
-        .getGroupsByInstitute(hash, institute.id);
+        .getGroups(hash, institute.id);
     resultTask.when(
       success: (data) {
         analyticState.addGroupsEx3(institute, data);

@@ -30,7 +30,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 600;
+    final isMobile = MediaQuery.of(context).size.width < 1000;
     return Scaffold(
       appBar: AppBar(
         title: Text(LocaleKeys.analytics.tr()),
@@ -44,6 +44,8 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               );
               context.read<AnalyticsBloc>().add(const AnalyticsEventToLoaded());
             });
+          } else if (state is AnalyticsStateEndedSession) {
+            Navigator.pushReplacementNamed(context, 'auth');
           }
         },
         builder: (context, state) {
@@ -67,7 +69,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
       controller: _scrollController,
       padding: const EdgeInsets.all(16),
       child: isMobile ? _buildMobileLayout(data, state) :
-      _buildDesktopLayout(data, state),
+      _buildQuickActionsGrid(data, state),
     );
   }
 
@@ -93,25 +95,59 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     );
   }
 
-  Widget _buildDesktopLayout(AnalyticData data, AnalyticsState state) {
-    return GridView.count(
-      crossAxisCount: 2,
-      childAspectRatio: 1.5,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.all(16),
-      crossAxisSpacing: 24,
-      mainAxisSpacing: 24,
-      children: [
-        _buildUniversityAttendance(data, state is AnalyticsStateLoadEx1),
-        _buildGroupAttendance(data, state is AnalyticsStateLoadEx2),
-        _buildGroupClusters(data, state is AnalyticsStateLoadEx3),
-        _buildInstitutesAnalysis(data, state is AnalyticsStateLoadEx4),
-        _buildTopTeachers(data, false, state is AnalyticsStateLoadEx5),
-        _buildTopStudents(data, false, state is AnalyticsStateLoadEx6),
-        _buildTopGroupsAbs(data, false, state is AnalyticsStateLoadEx7),
-        _buildTopGroupsAtd(data, false, state is AnalyticsStateLoadEx8),
-      ],
+  Widget _buildQuickActionsGrid(AnalyticData data, AnalyticsState state) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final screenWidth = constraints.maxWidth;
+        final cardWidth = (screenWidth - 24 * 2) / 2;
+        const cardHeight = 500.0;
+        return Wrap(
+          spacing: 24,
+          runSpacing: 24,
+          children: [
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: _buildUniversityAttendance(data, state is AnalyticsStateLoadEx1),
+            ),
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: _buildGroupAttendance(data, state is AnalyticsStateLoadEx2),
+            ),
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: _buildGroupClusters(data, state is AnalyticsStateLoadEx3),
+            ),
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: _buildInstitutesAnalysis(data, state is AnalyticsStateLoadEx4),
+            ),
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: _buildTopTeachers(data, false, state is AnalyticsStateLoadEx5),
+            ),
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: _buildTopStudents(data, false, state is AnalyticsStateLoadEx6),
+            ),
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: _buildTopGroupsAbs(data, false, state is AnalyticsStateLoadEx7),
+            ),
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: _buildTopGroupsAtd(data, false, state is AnalyticsStateLoadEx8),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -364,8 +400,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
             children: [
               Row(
                 children: [
-                  Text(title, style: Theme.of(context).textTheme.titleLarge),
-                  const Spacer(),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleLarge,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                   _buildDateRangePicker(dates, onDatePicked),
                 ],
               ),
@@ -678,8 +720,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           children: [
             Row(
               children: [
-                Text(title, style: Theme.of(context).textTheme.titleLarge),
-                const Spacer(),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleLarge,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 _buildDateRangePicker(dates, onDatePicked),
               ],
             ),
@@ -727,8 +775,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           children: [
             Row(
               children: [
-                Text(title, style: Theme.of(context).textTheme.titleLarge),
-                const Spacer(),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleLarge,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 _buildDateRangePicker(dates, onDatePicked),
               ],
             ),

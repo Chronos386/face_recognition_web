@@ -12,10 +12,29 @@ import 'presentation/pages/main_page.dart';
 import 'presentation/pages/login_page.dart';
 import 'res/generated/codegen_loader.g.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'presentation/bloc/room_bloc/room_bloc.dart';
 import 'presentation/bloc/main_bloc/main_bloc.dart';
+import 'presentation/bloc/group_bloc/group_bloc.dart';
 import '/presentation/bloc/login_bloc/login_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'presentation/bloc/subject_bloc/subject_bloc.dart';
+import 'presentation/bloc/teacher_bloc/teacher_bloc.dart';
+import 'presentation/pages/data_management/rooms_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'presentation/bloc/building_bloc/building_bloc.dart';
+import 'presentation/bloc/schedule_bloc/schedule_bloc.dart';
+import 'presentation/pages/data_management/groups_page.dart';
+import 'presentation/bloc/institute_bloc/institute_bloc.dart';
+import 'presentation/pages/data_management/students_page.dart';
+import 'presentation/pages/data_management/teachers_page.dart';
+import 'presentation/pages/data_management/subjects_page.dart';
+import 'presentation/pages/data_management/schedules_page.dart';
+import 'presentation/pages/data_management/buildings_page.dart';
+import 'presentation/bloc/department_bloc/department_bloc.dart';
+import 'presentation/bloc/attendance_bloc/attendance_bloc.dart';
+import 'presentation/pages/data_management/institutes_page.dart';
+import 'presentation/pages/data_management/attendance_page.dart';
+import 'presentation/pages/data_management/departments_page.dart';
 
 bool authUser = false;
 Future<void> main() async {
@@ -54,6 +73,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     print("HASH = ${sharedPreferences.getString(PreferencesKeys.USER_HASH)}");
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
@@ -75,8 +95,65 @@ class _MyAppState extends State<MyApp> {
             child: MainScreen()
           ),
         ),
-        "/teachers": (context) => RouteGuard.protect(
-          Container(),
+        "mainPage/attendance": (context) => RouteGuard.protect(
+          BlocProvider(
+              create: (context) => AttendanceBloc(),
+              child: AttendancePage()
+          ),
+        ),
+        "mainPage/students": (context) => RouteGuard.protect(
+          BlocProvider(
+              create: (context) => AttendanceBloc(),
+              child: StudentsPage()
+          ),
+        ),
+        "mainPage/groups": (context) => RouteGuard.protect(
+          BlocProvider(
+            create: (context) => GroupBloc(),
+            child: GroupsPage(),
+          ),
+        ),
+        "mainPage/teachers": (context) => RouteGuard.protect(
+          BlocProvider(
+            create: (context) => TeacherBloc(),
+            child: TeachersPage(),
+          ),
+        ),
+        "mainPage/schedule": (context) => RouteGuard.protect(
+          BlocProvider(
+            create: (context) => ScheduleBloc(),
+            child: SchedulePage(),
+          ),
+        ),
+        "mainPage/institutes": (context) => RouteGuard.protect(
+          BlocProvider(
+            create: (context) => InstituteBloc(),
+            child: InstitutesPage(),
+          ),
+        ),
+        "mainPage/departments": (context) => RouteGuard.protect(
+          BlocProvider(
+            create: (context) => DepartmentBloc(),
+            child: DepartmentsPage(),
+          ),
+        ),
+        "mainPage/subjects": (context) => RouteGuard.protect(
+          BlocProvider(
+            create: (context) => SubjectBloc(),
+            child: SubjectsPage(),
+          ),
+        ),
+        "mainPage/buildings": (context) => RouteGuard.protect(
+          BlocProvider(
+            create: (context) => BuildingBloc(),
+            child: BuildingsPage(),
+          ),
+        ),
+        "mainPage/rooms": (context) => RouteGuard.protect(
+          BlocProvider(
+            create: (context) => RoomBloc(),
+            child: RoomsPage(),
+          ),
         ),
       },
       initialRoute: authUser ? 'mainPage' : 'auth',

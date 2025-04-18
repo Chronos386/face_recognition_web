@@ -56,6 +56,28 @@ class AnalyticState {
     institutes.addAll(newInstitutes);
   }
 
+  void addInstitute(InstituteDomain newInstitute) {
+    institutes.add(newInstitute);
+  }
+
+  void updateInstitute(InstituteDomain newInstitute) {
+    for (var i = 0; i < institutes.length; i++) {
+      if (institutes[i].id == newInstitute.id) {
+        institutes[i].name = newInstitute.name;
+      }
+    }
+  }
+
+  void deleteInstitute(int id) {
+    int index = 0;
+    for (var i = 0; i < institutes.length; i++) {
+      if (institutes[i].id == id) {
+        index = i;
+      }
+    }
+    institutes.removeAt(index);
+  }
+
   void addForEx1(DateTime? startDate, DateTime? endDate,
       List<StatisticDomain> stat) {
     startDate_1 = startDate;

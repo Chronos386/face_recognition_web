@@ -29,11 +29,11 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<Result<List<GroupDomain>>> getGroupsByInstitute(String hash,
+  Future<Result<List<GroupDomain>>> getGroups(String hash,
       int instituteId) async {
     List<GroupDomain> list = [];
     late Result<List<GroupDomain>> resultStat;
-    final result = await networkStorage.getGroupsByInstitute(hash, instituteId);
+    final result = await networkStorage.getGroups(hash, instituteId);
     result.when(
       success: (stats) {
         for (var stat in stats) {

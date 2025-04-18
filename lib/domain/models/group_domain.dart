@@ -1,4 +1,7 @@
-class GroupDomain {
+import 'has_id.dart';
+
+class GroupDomain implements HasId {
+  @override
   final int id;
   final String name;
   final int instituteId;

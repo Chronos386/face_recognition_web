@@ -6,4 +6,5 @@ abstract class UserRepository {
   Future<Result<UserDomain>> loginByPassword(String login, String password);
   Future<Result<UserDomain>> getUser(String hash);
   Future<Result<bool>> logout(String hash);
+  Future<Result<bool>> clearAllHashes(String hash);
 }

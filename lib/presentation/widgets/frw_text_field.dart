@@ -5,21 +5,23 @@ import 'package:easy_localization/easy_localization.dart';
 class FrwTextField extends StatelessWidget {
   final TextEditingController controller;
   final String labelKey;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
   final bool obscureText;
   final String? Function(String?)? validator;
   final VoidCallback? onSuffixPressed;
   final bool showSuffixIcon;
+  final bool needBorder;
 
   const FrwTextField({
     super.key,
     required this.controller,
     required this.labelKey,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.obscureText = false,
     this.validator,
     this.onSuffixPressed,
     this.showSuffixIcon = false,
+    this.needBorder = false,
   });
 
   @override
@@ -29,16 +31,16 @@ class FrwTextField extends StatelessWidget {
       obscureText: obscureText,
       decoration: InputDecoration(
         labelText: labelKey.tr(),
-        prefixIcon: Icon(prefixIcon),
+        prefixIcon: (prefixIcon != null) ? Icon(prefixIcon) : null,
         suffixIcon: showSuffixIcon ? IconButton(
           icon: Icon(
             obscureText ? Icons.visibility_off : Icons.visibility,
           ),
           onPressed: onSuffixPressed,
         ) : null,
-        border: OutlineInputBorder(
+        border: needBorder ? OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-        ),
+        ) : null,
       ),
       validator: validator,
     );

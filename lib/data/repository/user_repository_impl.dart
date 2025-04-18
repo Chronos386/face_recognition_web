@@ -35,4 +35,9 @@ class UserRepositoryImpl implements UserRepository {
   Future<Result<bool>> logout(String hash) async {
     return await networkStorage.logout(hash);
   }
+
+  @override
+  Future<Result<bool>> clearAllHashes(String hash) async {
+    return await networkStorage.clearAllHashes(hash);
+  }
 }

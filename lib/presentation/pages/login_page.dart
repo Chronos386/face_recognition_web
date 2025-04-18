@@ -100,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
       prefixIcon: Icons.email,
       validator: (value) =>
       value!.isEmpty ? LocaleKeys.email_required.tr() : null,
+      needBorder: true,
     );
   }
 
@@ -113,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
       onSuffixPressed: () => setState(() => _obscurePassword = !_obscurePassword),
       validator: (value) =>
       value!.isEmpty ? LocaleKeys.password_required.tr() : null,
+      needBorder: true,
     );
   }
 

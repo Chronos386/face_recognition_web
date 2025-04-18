@@ -34,6 +34,9 @@ class UserInteractor {
     if (hash == null) {
       return Error(ErrorCodes.SESSION_IS_CLOSED);
     }
+    if (userState.user != null) {
+      return Success(userState.user!);
+    }
     Result<UserDomain> result = await userRepo.getUser(hash);
     result.when(
       success: (user) {
@@ -50,13 +53,14 @@ class UserInteractor {
     if (hash == null) {
       return Error(ErrorCodes.SESSION_IS_CLOSED);
     }
-    Result<bool> result = await userRepo.logout(hash);
-    result.when(
-      success: (res) {
-        userState.clearUser();
-      },
-      error: (error) {},
-    );
-    return result;
+    return await userRepo.logout(hash);
+  }
+
+  Future<Result<bool>> clearAllHashes() async {
+    String? hash = sharedPreferences.getString(PreferencesKeys.USER_HASH);
+    if (hash == null) {
+      return Error(ErrorCodes.SESSION_IS_CLOSED);
+    }
+    return await userRepo.clearAllHashes(hash);
   }
 }

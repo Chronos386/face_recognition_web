@@ -1,6 +1,9 @@
 // domain/models/user_domain.dart
 
-class UserDomain {
+import 'has_id.dart';
+
+class UserDomain implements HasId {
+  @override
   final int id;
   final bool isAdmin;
   final String login;

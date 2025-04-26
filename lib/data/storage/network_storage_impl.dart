@@ -34,7 +34,7 @@ import '../models/top_group_attendance_dto/top_group_attendance_dto.dart';
 
 class NetworkStorageImpl implements NetworkStorage {
   final dio = Dio();
-  final baseURL = "http://172.20.10.13:6583";
+  final baseURL = "http://0.0.0.0:6583";
 
   Future<Result<T>> _performRequest<T>({
     required String method,
